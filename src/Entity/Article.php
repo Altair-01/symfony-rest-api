@@ -29,6 +29,11 @@ class Article implements UserOwnedInterface
     #[Groups(['read:collection'])]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['read:collection', 'write:Article'])]
+    private ?string $titre = null;
+
+
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:collection'])]
     private ?string $slug = null;
@@ -50,10 +55,7 @@ class Article implements UserOwnedInterface
 
     private ?Category $category = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(['read:collection', 'write:Article'])]
-    private ?string $titre = null;
-
+ 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?User $user = null;
 
@@ -151,5 +153,9 @@ class Article implements UserOwnedInterface
         $this->user = $user;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->titre;
     }
 }
